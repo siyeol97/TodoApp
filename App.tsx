@@ -1,14 +1,15 @@
 import React from 'react';
-import {SafeAreaView, Text, View} from 'react-native';
+import DateHead from './components/DateHead';
+import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 
-function App(): React.JSX.Element {
+export default function App(): React.JSX.Element {
+  const today = new Date();
+
   return (
-    <SafeAreaView>
-      <View>
-        <Text>하이</Text>
-      </View>
-    </SafeAreaView>
+    <SafeAreaProvider>
+      <SafeAreaView edges={['bottom']}>
+        <DateHead today={today} />
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
-
-export default App;
