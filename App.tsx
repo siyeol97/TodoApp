@@ -3,7 +3,7 @@ import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import DateHead from './components/DateHead';
 import AddTodo from './components/AddTodo';
 import Empty from './components/Empty';
-import {StyleSheet} from 'react-native';
+import {KeyboardAvoidingView, Platform, StyleSheet} from 'react-native';
 
 export default function App(): React.JSX.Element {
   const today = new Date();
@@ -11,9 +11,13 @@ export default function App(): React.JSX.Element {
   return (
     <SafeAreaProvider>
       <SafeAreaView edges={['bottom']} style={styles.wrapper}>
-        <DateHead today={today} />
-        <Empty />
-        <AddTodo />
+        <KeyboardAvoidingView
+          style={styles.avoid}
+          behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+          <DateHead today={today} />
+          <Empty />
+          <AddTodo />
+        </KeyboardAvoidingView>
       </SafeAreaView>
     </SafeAreaProvider>
   );
@@ -21,6 +25,9 @@ export default function App(): React.JSX.Element {
 
 const styles = StyleSheet.create({
   wrapper: {
+    flex: 1,
+  },
+  avoid: {
     flex: 1,
   },
 });
