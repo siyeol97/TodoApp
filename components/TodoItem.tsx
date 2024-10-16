@@ -1,6 +1,7 @@
 import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {Todo} from '../types';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 interface Props {
   todo: Todo;
@@ -21,6 +22,7 @@ export default function TodoItem({todo, onToggle}: Props) {
         </View>
       </TouchableOpacity>
       <Text style={[styles.text, done && styles.lineThrough]}>{text}</Text>
+      <Icon name="delete" size={32} color="red" />
     </View>
   );
 }
