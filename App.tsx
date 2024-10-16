@@ -37,6 +37,11 @@ export default function App(): React.JSX.Element {
     setTodos(nextTodos);
   };
 
+  const onRemove = (id: number) => {
+    const nextTodos = todos.filter(todo => todo.id !== id);
+    setTodos(nextTodos);
+  };
+
   return (
     <SafeAreaProvider>
       <SafeAreaView edges={['bottom']} style={styles.wrapper}>
@@ -47,7 +52,7 @@ export default function App(): React.JSX.Element {
           {todos.length === 0 ? (
             <Empty />
           ) : (
-            <TodoList todos={todos} onToggle={onToggle} />
+            <TodoList todos={todos} onToggle={onToggle} onRemove={onRemove} />
           )}
           <AddTodo onInsert={onInsert} />
         </KeyboardAvoidingView>

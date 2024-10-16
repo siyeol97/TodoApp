@@ -1,4 +1,11 @@
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Alert,
+} from 'react-native';
 import React from 'react';
 import {Todo} from '../types';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -6,10 +13,33 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 interface Props {
   todo: Todo;
   onToggle: (id: number) => void;
+  onRemove: (id: number) => void;
 }
 
-export default function TodoItem({todo, onToggle}: Props) {
+export default function TodoItem({todo, onToggle, onRemove}: Props) {
   const {id, text, done} = todo;
+
+  const remove = () => {
+    Alert.alert(
+      '삭제',
+      '정말로 삭제하시겠습니까?',
+      [
+        {text: '취소', onPress: () => {}, style: 'cancel'},
+        {
+          text: '삭제',
+          onPress: () => {
+            onRemove(id);
+          },
+          style: 'destructive',
+        },
+      ],
+      {
+        cancelable: true, // Android에서 alert 바깥 영역 터치 시 닫힘, ios X
+        onDismiss: () => {},
+      },
+    );
+  };
+
   return (
     <View style={styles.item}>
       <TouchableOpacity onPress={() => onToggle(id)} activeOpacity={0.7}>
@@ -22,7 +52,9 @@ export default function TodoItem({todo, onToggle}: Props) {
         </View>
       </TouchableOpacity>
       <Text style={[styles.text, done && styles.lineThrough]}>{text}</Text>
-      <Icon name="delete" size={32} color="red" />
+      <TouchableOpacity onPress={remove} activeOpacity={0.3}>
+        <Icon name="delete" size={32} color="red" />
+      </TouchableOpacity>
     </View>
   );
 }
