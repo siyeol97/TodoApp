@@ -10,10 +10,15 @@ import {
 import React, {useState} from 'react';
 import AddButton from './AddButton';
 
-export default function AddTodo() {
+interface Props {
+  onInsert: (text: string) => void;
+}
+
+export default function AddTodo({onInsert}: Props) {
   const [text, setText] = useState('');
 
   const onPress = () => {
+    onInsert(text);
     setText('');
     Keyboard.dismiss();
   };
